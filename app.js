@@ -1,24 +1,20 @@
-//Gera log no terminal de todas as requisições
 const morgan = require('morgan');
-//Tratando corpo da requisição
 const bodyParser = require('body-parser');
-//
+const path = require('path');
 const handlebars = require('express-handlebars');
-//Monitorando as rotas
 const express = require('express');
 const app = express();
-
-app.engine('handlebars', handlebars({defaultLayout: 'main'}));
-app.set('view engine', 'handlebars');
-
+const rotaAdmin = require('./routes/admin/admin');
 const rotaProdutos = require('./routes/produtos');
 const rotaPedidos = require('./routes/pedidos');
 
+app.engine('handlebars', handlebars({defaultLayout: 'main'}));
+app.set('view engine', 'handlebars');
 app.use(morgan('dev'));
-
-//Dizendo que recebe apenas json
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, 'public')));
+
 
 //Ajustando cors
 app.use((req, res, next) => {
@@ -43,6 +39,7 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use('/admin', rotaAdmin);
 app.use('/produtos', rotaProdutos);
 app.use('/pedidos', rotaPedidos);
 

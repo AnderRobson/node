@@ -1,0 +1,51 @@
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Produtos</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <a href="" class="btn btn-outline-secondary active" role="button" aria-pressed="true">
+                <span data-feather="plus"></span>
+                Cadastrar Produto
+            </a>
+        </div>
+    </div>
+    <div class="ajax_load">
+        <div class="ajax_load_box">
+            <div class="ajax_load_box_circle"></div>
+            <div class="ajax_load_box_title jumbotrom">Aguarde, carregando!</div>
+        </div>
+    </div>
+    <div class="form_ajax" style="display: none"></div>
+    <table class="table text-center">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">Código</th>
+            <th scope="col">Título</th>
+            <th scope="col">Descrição</th>
+            <th scope="col">status</th>
+            <th scope="col">Opções</th>
+        </tr>
+        </thead>
+        <tbody>
+        <section class="product">
+            {{#each produtos as |produto key|}}
+                <tr>
+                    <td>{{produto.code}}</td>
+                    <td>{{produto.title}}</td>
+                    <td>{{produto.description}}</td>
+                    <td>
+                    {{#if produto.status}}Ativado{{else}}Desativado{{/if}}
+                    </td>
+                    <td class="text-center">
+                        <a href="/admin/produtos/edit/{{produto.id}}" class="btn btn-outline-secondary active" role="button" aria-pressed="true">
+                        <span data-feather="edit"></span>
+                        </a>
+                        <a href="#" data-action="/produtos/{{produto.id}}" data-method="delete" class="remove btn btn-outline-secondary active" role="button" aria-pressed="true">
+                        <span data-feather="delete"></span>
+                        </a>
+                    </td>
+                </tr>
+            {{/each}}
+        </section>
+        </tbody>
+    </table>
+</main>

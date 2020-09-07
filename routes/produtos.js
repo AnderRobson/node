@@ -12,8 +12,10 @@ router.get('/list', (req, res, next) => {
             produtos: resultado.map(produto => {
                 return {
                     id: produto.id,
-                    nome: produto.nome,
-                    preco: produto.preco
+                    status : produto.status,
+                    title : produto.title,
+                    description: produto.description,
+                    code: produto.code
                 }
             })
         });
@@ -34,8 +36,10 @@ router.get('/', (req, res, next) => {
            produtos: resultado.map(produto => {
                return {
                    id: produto.id,
-                   nome: produto.nome,
-                   preco: produto.preco
+                   status : produto.status,
+                   title : produto.title,
+                   description: produto.description,
+                   code: produto.code
                }
            })
         });
@@ -52,20 +56,26 @@ router.get('/', (req, res, next) => {
 router.post('/', (req, res, next) => {
     let produto = {
         id: null,
-        nome: req.body.nome,
-        preco: req.body.preco
+        status : req.body.status,
+        title : req.body.title,
+        description: req.body.description,
+        code: req.body.code
     };
 
     Produto.create({
-        nome: produto.nome,
-        preco: produto.preco
+        status : produto.status,
+        title : produto.title,
+        description: produto.description,
+        code: produto.code
     }).then(resultado => {
         return res.status(201).send({
             mensagem: 'Produto cadastrado com sucesso',
             produto: {
                 id: resultado.id,
-                nome: resultado.nome,
-                preco: resultado.preco,
+                status : resultado.status,
+                title : resultado.title,
+                description: resultado.description,
+                code: resultado.code,
                 request: {
                     tipo: 'POST',
                     descricao: 'Cadastrando Produto',
@@ -86,17 +96,27 @@ router.post('/', (req, res, next) => {
 router.patch('/:id_produto', (req, res, next) => {
     let produto = {
         id_produto: req.params.id_produto,
-        nome : req.body.nome,
-        preco: req.body.preco
+        status : req.body.status,
+        title : req.body.title,
+        description: req.body.description,
+        code: req.body.code
     }
     let update = {};
 
-    if (produto.nome) {
-        update.nome = produto.nome;
+    if (produto.status) {
+        update.status = produto.status;
     }
 
-    if (produto.preco) {
-        update.preco = produto.preco;
+    if (produto.title) {
+        update.preco = produto.title;
+    }
+
+    if (produto.description) {
+        update.description = produto.description;
+    }
+
+    if (produto.code) {
+        update.code = produto.code;
     }
 
     Produto.update(update, {
@@ -170,8 +190,10 @@ router.get('/:id_produto', (req, res, next) => {
         if (resultado !== null) {
             produto = {
                 id: resultado.id,
-                nome: resultado.nome,
-                preco: resultado.preco
+                status : resultado.status,
+                title : resultado.title,
+                description: resultado.description,
+                code: resultado.code,
             }
         }
 
